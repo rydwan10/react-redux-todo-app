@@ -1,13 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+// Redux Things 
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { logger } from 'redux-logger';
+// bring the reducer for creating a store
+import { reducer } from './store';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
+// create a store
+const store = createStore(reducer,
+  compose(
+    applyMiddleware(logger),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  ))
+
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
